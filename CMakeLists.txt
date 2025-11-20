@@ -12,7 +12,13 @@ endif()
 project ("Arrays")
 
 # Add source to this project's executable.
-add_executable (Arrays "src/main.cpp" "headers/Array.h")
+add_executable (Arrays "src/main.cpp" "headers/VectorArray.h" "headers/FactorArray.h" "headers/List.h")
+
+# Указываем где искать заголовки
+target_include_directories(Arrays PRIVATE
+    ${CMAKE_SOURCE_DIR}/headers
+    ${CMAKE_SOURCE_DIR}/src    
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Arrays PROPERTY CXX_STANDARD 20)

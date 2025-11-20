@@ -6,7 +6,17 @@ public:
     // Конструкторы
     Array() : data(nullptr), size_(0), capacity_(0) {}
 
-    Array(size_t capacity) : data(new T[capacity]{}), size_(capacity), capacity_(capacity) {}
+    // Конструктор емкости (пустой массив)
+    Array(size_t capacity) : data(new T[capacity]), size_(0), capacity_(capacity) {}
+
+    // Конструктор размера (заполненный default значениями)
+    Array(size_t size, const T& value = T{})
+        : data(new T[size]), size_(size), capacity_(size)
+    {
+        for (size_t i = 0; i < size_; ++i) {
+            data[i] = value;
+        }
+    }
 
     Array(std::initializer_list<T> init) : size_(init.size()), capacity_(init.size()) {
         if (size_) {
@@ -34,8 +44,8 @@ public:
         other.capacity_ = 0;
     }
 
-    virtual ~Array() {
-        delete[] data;
+    virtual ~Array() {        
+        if (data) { delete[] data; };        
     }
 
     // Оператор копирующего присваивания
@@ -78,13 +88,62 @@ public:
     }
 
     // Методы для работы с размером
-    size_t size() const { return size_; }
-    size_t capacity() const { return capacity_; }
+    size_t size() const noexcept { return size_; };
+    size_t capacity() const noexcept { return capacity_; };
+    bool is_empty() const noexcept { return 0==size_; }
 
-    // Итераторы
-    Iterator begin() { return Iterator(data); }
-    Iterator end() { return Iterator(data + size_); }
+    //медоды для добавления / удаления элементов
+    virtual void push_back(T item) = 0;
 
+    virtual void push(T item, size_t idx) = 0;
+
+    virtual T del(size_t idx) {        
+        if (idx >= size_) throw std::invalid_argument("Index out of range");        
+        T item = data[idx];
+        shift_up(idx + 1);
+        return item;
+    }    
+
+//внутренние данные и методы класса
+protected:    
+    size_t free_space() {
+        return (capacity_ - size_);
+    }
+    //служебные функции для сдвига элементов    
+    virtual void shift_down(size_t idx) { //сдвигаем все элементы к концу на 1 начиная с idx)
+        if(!free_space() || idx >= size_) throw std::invalid_argument("Index out of range");
+        
+        for(size_t i = size_; i > idx; --i) {
+            data[i] = data[i - 1];
+        };
+        ++size_;
+    }    
+
+    virtual void shift_up(size_t idx) { //сдвигаем все элементы к началу на 1 начиная с idx)        
+        
+        if (idx == 0 || idx > size_) throw std::invalid_argument("Index out of range");
+
+        for(size_t i = idx; i != size_; ++i) {
+            data[i - 1] = data[i];
+        };
+        --size_;
+    }
+    //служебная фукнция изменения размера
+    virtual void resize(size_t new_capacity) {
+        T* new_data = new T[new_capacity];
+        for (size_t i = 0; i < size_; ++i) {
+            new_data[i] = std::move(data[i]);
+        }
+        delete[] data;
+        data = new_data;
+        capacity_ = new_capacity;
+    }
+protected:
+    T* data;
+    size_t size_;
+    size_t capacity_;
+
+//итератор для работы с нашим массивом
 public:
     class Iterator {
     public:
@@ -142,9 +201,7 @@ public:
     private:
         T* ptr;
     };
-
-protected:
-    T* data;
-    size_t size_;
-    size_t capacity_;
+    // Итераторы
+    Iterator begin() { return Iterator(data); }
+    Iterator end() { return Iterator(data + size_); }
 };
