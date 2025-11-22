@@ -18,93 +18,243 @@ public:
 	};
 
 	// Конструкторы
-	List() : head(nullptr), tail(nullptr) {};
+	List() = default;  // пустой список
 
-	// Конструктор размера (заполненный default значениями)
-	Array(size_t size, const T& value = T{})
-		: data(new T[size]), size_(size), capacity_(size)
-	{
-		for (size_t i = 0; i < size_; ++i) {
-			data[i] = value;
+	// Из initializer_list
+	List(std::initializer_list<T> init) {
+		for (const auto& item : init) {
+			push_back(item);
 		}
-	}
+	};
 
-	Array(std::initializer_list<T> init) : size_(init.size()), capacity_(init.size()) {
-		if (size_) {
-			data = new T[size_];
-			std::copy(init.begin(), init.end(), data);
+	// Из количества с default значениями
+	List(size_t count, const T& value = T{}) {
+		for (size_t i = 0; i < count; ++i) {
+			push_back(value);
 		}
-		else {
-			data = nullptr;
-		}
-	}
+	};
 
 	// Конструктор копирования
-	Array(const Array& other) : size_(other.size_), capacity_(other.capacity_) {
-		data = new T[capacity_];
-		for (size_t idx = 0; idx != size_; ++idx) {
-			data[idx] = other.data[idx];
+	List(const List& other) {
+		for (const auto& item : other) {
+			push_back(item);
 		}
-	}
+	};
 
 	// Конструктор перемещения
-	Array(Array&& other) noexcept
-		: data(other.data), size_(other.size_), capacity_(other.capacity_) {
-		other.data = nullptr;
+	List(List&& other) noexcept
+		: head(other.head), tail(other.tail), size_(other.size_) {
+		other.head = nullptr;
+		other.tail = nullptr;
 		other.size_ = 0;
-		other.capacity_ = 0;
+	}		
+
+	virtual ~List() {
+		clear();
+	};
+	
+
+	// Оператор копирующего присваивания
+	List& operator=(const List& other) {
+		clear();
+		for (const auto& item : other) {
+			push_back(item);
+		}
+		return *this;
+	};
+	
+	// Оператор перемещающего присваивания
+	List& operator=(List&& other) noexcept {
+		head = other.head;
+		tail = other.tail;
+		size_ = other.size_;
+		other.head = nullptr;
+		other.tail = nullptr;
+		other.size_ = 0;
+		return *this;
+	};
+
+	//получение информации о списке
+	size_t size() const {
+		return size_;
+	}
+
+	bool is_empty() const {
+		return head == nullptr;
+	}
+
+	//функции для работы со списком
+	
+	//oчистка списка
+	void clear() {
+		Node* current = head;
+		while (current != nullptr) {
+			Node* next = current->next;
+			delete current;
+			current = next;
+		}
+		head = nullptr;
+		tail = nullptr;
+		size_ = 0;
+	}	
+	//доступ к данным
+	T& operator[] (size_t idx) {
+		if (idx >= size_) throw std::invalid_argument("Index out of range");
+		Node* item = head;
+		for (size_t counter = 0; counter < idx; ++counter) {
+			item = item->next;
+		};		
+		return item->data;
+	}
+
+	const T& operator[] (size_t idx) const {
+		if (idx >= size_) throw std::invalid_argument("Index out of range");
+		Node* item = head;
+		for (size_t counter = 0; counter < idx; ++counter) {
+			item = item->next;
+		};		
+		return item->data;
+	}
+
+	//добавление в конец
+	template<typename U>
+	void push_back(U&& value) {
+
+		//проверяем, что тип списка и тип добавляемого элемента совпадают
+		static_assert(std::is_same_v<std::decay_t<U>, T>,
+			"Exact type match required");
+
+		Node* new_node = new Node(std::forward<U>(value));
+
+		if (tail == nullptr) {
+			head = new_node;
+			tail = new_node;
+		}
+		else {
+			tail->next = new_node;
+			tail = new_node;
+		}
+		++size_;
+	};
+
+	//добавление в начало
+	template<typename U>
+	void push_front(U&& value) {
+
+		//проверяем, что тип списка и тип добавляемого элемента совпадают
+		static_assert(std::is_same_v<std::decay_t<U>, T>,
+			"Exact type match required");
+
+		Node* new_node = new Node(std::forward<U>(value));
+
+		if (head == nullptr) {
+			head = new_node;
+			tail = new_node;
+		}
+		else {
+			new_node->next = head;
+			head = new_node;			
+		}
+		++size_;
+	}
+
+	//вставка на позицию
+	template<typename U>
+	void insert(U&& value, size_t idx) {
+
+		//проверяем, что тип списка и тип добавляемого элемента совпадают
+		static_assert(std::is_same_v<std::decay_t<U>, T>,
+			"Exact type match required");
+		//проверяем индекс
+		if (idx > size_) throw std::invalid_argument("Index out of range");
+
+		if (idx == size_) {
+			push_back(std::forward<U>(value));
+			return;
+		};
+		if (0 == idx) {
+			push_front(std::forward<U>(value));
+			return;
+		}
+
+		Node* new_node = new Node(std::forward<U>(value));
+		Node* position = head;
+		//доходим до нужного элемента
+		for (size_t counter = 1; counter < idx; ++counter) {
+			position = position->next;
+		};
+		//добавляем
+		new_node->next = position->next;
+		position->next = new_node;		
+		++size_;
+	}
+
+	//удаление элемента
+	T del(size_t idx) {
+		if (idx >= size_) throw std::invalid_argument("Index out of range");
+
+		Node* to_delete = nullptr;
+		T data;
+
+		if (idx == 0) {
+			to_delete = head;
+			data = head->data;
+			head = head->next;
+			if (head == nullptr) tail = nullptr;
+		}
+		else {
+			Node* prev = head;
+			for (size_t i = 1; i < idx; ++i) {
+				prev = prev->next;
+			}
+			to_delete = prev->next;
+			data = to_delete->data;
+			prev->next = to_delete->next;
+
+			if (to_delete == tail) {
+				tail = prev;
+			}
+		}
+
+		delete to_delete;
+		--size_;
+		return data;
 	}
 
 	//итератор для работы с нашим списком
 public:
 	class ListIterator {
 	public:
-		ListIterator() : ptr(nullptr) {}
-		ListIterator(T* item) : ptr(item) {}
-		ListIterator(const ListIterator& other) : ptr(other.ptr) {}
-		~ListIterator() = default;
+		ListIterator() : node_ptr(nullptr) {}
+		ListIterator(Node* node) : node_ptr(node) {}
+		ListIterator(const ListIterator& other) : node_ptr(other.node_ptr) {}
 
-		// Оператор доступа к членам
-		T* operator->() const { return ptr; }
+		T& operator*() { return node_ptr->data; }
+		const T& operator*() const { return node_ptr->data; }
 
-		// Обмен
-		void swap(ListIterator& other) {
-			std::swap(ptr, other.ptr);
-		}
+		T* operator->() { return &(node_ptr->data); }
+		const T* operator->() const { return &(node_ptr->data); }
 
-		// Присваивание
-		ListIterator& operator=(const ListIterator& other) {
-			ptr = other.ptr;
-			return *this;
-		}
-
-		// Разыменование
-		T& operator*() { return *ptr; }
-		const T& operator*() const { return *ptr; }
-
-		// Инкремент
 		ListIterator& operator++() {
-			if (ptr) ptr = ptr->next;
+			node_ptr = node_ptr->next;
 			return *this;
 		}
 
-		Iterator operator++(int) {
-			Iterator tmp = *this;
-			if (ptr) ptr = ptr->next;
+		ListIterator operator++(int) {
+			ListIterator tmp = *this;
+			node_ptr = node_ptr->next;
 			return tmp;
 		}
 
-		// Декремент
-		Iterator& operator--() = delete;
-
-		Iterator operator--(int) = delete;
-
-		// Сравнение
-		bool operator==(const Iterator& other) const { return ptr == other.ptr; }
-		bool operator!=(const Iterator& other) const { return ptr != other.ptr; }
+		bool operator==(const ListIterator& other) const {
+			return node_ptr == other.node_ptr;
+		}
+		bool operator!=(const ListIterator& other) const {
+			return node_ptr != other.node_ptr;
+		}
 
 	private:
-		Node* ptr;
+		Node* node_ptr;
 	};
 	// Итераторы
 	ListIterator begin() { return ListIterator(head); }
@@ -112,87 +262,6 @@ public:
 
 private:
 	Node* head = nullptr;
-	Node* tail = nullptr;;
-
-
+	Node* tail = nullptr;
+	size_t size_ = 0;
 };
-
-/*struct node {
-		//данные
-		T data;
-		node * prev;
-		node * next;
-		//конструкторы
-		node() : prev(nullptr), next(nullptr) {};
-		node(T data) : data(data), prev(nullptr), next(nullptr) {};
-		node(node& other) = delete; 
-	};
-
-public:
-	//конструкторы
-	List() : head(nullptr), tail(nullptr) {make_list();}
-	List(List& other) {}
-	~List();
-//классы исключений
-	
-public:
-	class bad_add : public std::bad_alloc //ошибка добавления элемента
-	{
-	public:
-		const char* what() const {
-			return "Элемент не добавлен! Нехватка памяти";
-		}
-	};	
-	class bad_erase : public std::exception //удаление из пустого списка
-	{
-	public:
-		const char* what() const {
-			return "Ошибка! Попытка удаления из пустого списка";
-		}
-	};
-
-public:	
-	class ListIterator :public std::iterator<std::bidirectional_iterator_tag, T> //класс итератора для работы со списками
-	{	
-	public:
-		ListIterator() : ptr(nullptr) {}
-		ListIterator(node * item) : ptr(item) {}
-		ListIterator(ListIterator& other) :ptr(other.ptr) {}
-		~ListIterator() = default;
-
-		node * operator->() const;		
-		void swap(ListIterator& other);		
-		ListIterator& operator=(const ListIterator& other);		
-		node * operator*();		
-		const node * operator*() const;		
-		ListIterator& operator++();
-		ListIterator operator++(int);		
-		ListIterator& operator--();		
-		ListIterator operator--(int);		
-		bool operator==(const ListIterator& other) const;
-		bool operator!=(const ListIterator& other) const;
-	
-	private:
-		node * ptr;
-	};
-
-public:
-	//открытые функции-члены	
-	node * push_front(T item); //добавление элемента в начало списка	
-	node * push_back(T item); //добавление элемента в конец списка	
-	node * insert(T item, node * previous);//добавление элемента после любого	
-	
-	ListIterator begin();
-	ListIterator end();
-	
-	void erase(ListIterator it); //удаление произвольного элемента из списка	
-	bool empty(); //проверка списка на пустоту	
-	void clear(); //уничтожение списка	
-	
-private:
-	void make_list(); //внутренняя функция для создания списка 
-private:
-	node * head; //начало списка (пустой граничный элемент)
-	node * tail; //конец списка (пустой граничный элемент)
-};*/
-
