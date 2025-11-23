@@ -51,8 +51,7 @@ public:
 
 	virtual ~List() {
 		clear();
-	};
-	
+	};	
 
 	// Оператор копирующего присваивания
 	List& operator=(const List& other) {
@@ -65,6 +64,7 @@ public:
 	
 	// Оператор перемещающего присваивания
 	List& operator=(List&& other) noexcept {
+		clear();
 		head = other.head;
 		tail = other.tail;
 		size_ = other.size_;

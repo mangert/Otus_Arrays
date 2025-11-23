@@ -18,6 +18,7 @@ public:
         }
     }
 
+    //конструктор предоставленных данных
     Array(std::initializer_list<T> init) : size_(init.size()), capacity_(init.size()) {
         if (size_) {
             data = new T[size_];
@@ -92,10 +93,12 @@ public:
     size_t capacity() const noexcept { return capacity_; };
     bool is_empty() const noexcept { return 0==size_; }
 
-    //медоды для добавления / удаления элементов
-    virtual void push_back(T item) = 0;
+    //медоды для добавления / удаления элементов            
+    virtual void push_back(const T& item) = 0;
+    virtual void push_back(T&& item) = 0;
 
-    virtual void push(T item, size_t idx) = 0;
+    virtual void push(const T& item, size_t idx) = 0;
+    virtual void push(T&& item, size_t idx) = 0;
 
     virtual T del(size_t idx) {        
         if (idx >= size_) throw std::invalid_argument("Index out of range");        
