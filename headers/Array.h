@@ -10,13 +10,13 @@ public:
     Array(size_t capacity) : data(new T[capacity]), size_(0), capacity_(capacity) {}
 
     // Конструктор размера (заполненный default значениями)
-    Array(size_t size, const T& value = T{})
+    /*Array(size_t size, const T& value = T{})
         : data(new T[size]), size_(size), capacity_(size)
     {
         for (size_t i = 0; i < size_; ++i) {
             data[i] = value;
         }
-    }
+    }*/
 
     //конструктор предоставленных данных
     Array(std::initializer_list<T> init) : size_(init.size()), capacity_(init.size()) {
@@ -94,11 +94,11 @@ public:
     bool is_empty() const noexcept { return 0==size_; }
 
     //медоды для добавления / удаления элементов            
-    virtual void push_back(const T& item) = 0;
-    virtual void push_back(T&& item) = 0;
+    virtual void push_back(const T& item) {};
+    virtual void push_back(T&& item) {};
 
-    virtual void push(const T& item, size_t idx) = 0;
-    virtual void push(T&& item, size_t idx) = 0;
+    virtual void push(const T& item, size_t idx) {};
+    virtual void push(T&& item, size_t idx) {};
 
     virtual T del(size_t idx) {        
         if (idx >= size_) throw std::invalid_argument("Index out of range");        
@@ -107,6 +107,18 @@ public:
         return item;
     }    
 
+    // Служебные функции добавляют один элемент к size в пределах емкости
+    void place_at(size_t idx, const T& value) {
+        if (idx >= capacity_) throw std::out_of_range("Capacity exceeded");
+        if (idx >= size_) size_ = idx + 1;  // автоматически увеличиваем size
+        data[idx] = value;
+    }
+
+    void place_at(size_t idx, T&& value) {
+        if (idx >= capacity_) throw std::out_of_range("Capacity exceeded");
+        if (idx >= size_) size_ = idx + 1;
+        data[idx] = std::move(value);
+    }
 //внутренние данные и методы класса
 protected:    
     size_t free_space() {
@@ -140,7 +152,8 @@ protected:
         delete[] data;
         data = new_data;
         capacity_ = new_capacity;
-    }
+    }    
+    
 protected:
     T* data;
     size_t size_;
