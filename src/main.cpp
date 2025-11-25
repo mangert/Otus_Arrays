@@ -5,8 +5,8 @@
 #include "FactorArray.h"
 #include "MatrixArray.h"
 #include "List.h"
-
-
+#include "TestArrays.h"
+/*
 void print(Array<int>& array) {
 
 	for (auto& item : array) {
@@ -26,51 +26,57 @@ void print(MatrixArray<int>& list) {
 	for (auto& item : list) {
 		std::cout << item << "  ";
 	};
-};
+};*/
 
 int main() {
 	setlocale(LC_ALL, "Russian");
 
+	std::cout << "1. Single array" << std::endl;
+	TestArrays<SingleArray, int> singleTest{ 1, 10, 100000 };
+	std::cout << "Testing SingleArray push_back:" << std::endl;
+	singleTest.test_push_back();
+
+	
+	/*
 	std::cout << "Матричный массив" << std::endl;
-	MatrixArray<int> simpleArray{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
-	//MatrixArray<int> simpleArray(12);
+	MatrixArray<int> simpleArray{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };	
 	print(simpleArray);
 	
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
 	std::cout << std::endl << "****************" << std::endl;
-	/*
-	simpleArray.push_back(11);
+	
+	simpleArray.push_back(21);
 	print(simpleArray);
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
 	std::cout << std::endl << "****************" << std::endl;
-
+	
 	simpleArray.del(5);
 	print(simpleArray);
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
 	std::cout << std::endl << "****************" << std::endl;
-
+	
 	simpleArray.push(5, 5);
 	print(simpleArray);
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
 	std::cout << std::endl << "****************" << std::endl;
-
+	
 	simpleArray.del(0);
 	print(simpleArray);
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
 	std::cout << std::endl << "****************" << std::endl;
-
+	
 	simpleArray.push(0, 0);
 	print(simpleArray);
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
 	std::cout << std::endl << "****************" << std::endl;
 
-
-	simpleArray.del(11);
+	
+	simpleArray.del(21);
 	print(simpleArray);
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
 	std::cout << std::endl << "****************" << std::endl;
-
-	simpleArray.push_back(11);
+	
+	simpleArray.push_back(21);
 	print(simpleArray);
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
 	std::cout << std::endl << "****************" << std::endl;
@@ -80,6 +86,39 @@ int main() {
 	simpleArray[9] = 19;
 	print(simpleArray);
 	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
+	std::cout << std::endl << "****************" << std::endl;
+	
+	auto it = std::find(simpleArray.begin(), simpleArray.end(), 10);
+	if (it != simpleArray.end()) {
+		std::cout << "Found: " << *it << std::endl;
+	}
+	// Пустой массив
+	MatrixArray<int> empty(10);
+	std::cout << "Empty: " << empty.is_empty() << std::endl;
+	print(empty);
+	std::cout << "====================" << std::endl;	// Один элемент 	
+	std::cout << std::endl << "****************" << std::endl;
+	MatrixArray<int> single{42};
+	print(single);
+	std::cout << std::endl << "****************" << std::endl;
+	std::cout << std::endl << "size: " << single.size() << " capacity: " << single.capacity() << std::endl;
+	single.push_back(43);
+	print(single);
+	std::cout << std::endl << "****************" << std::endl;	
+	single.del(0);
+	print(single);
+	std::cout << std::endl << "****************" << std::endl;
+	// Конструктор копирования
+	MatrixArray<int> copy = MatrixArray<int>(simpleArray);
+	print(copy);
+	std::cout << std::endl << "****************" << std::endl;
+	// Перемещение  
+	MatrixArray<int> moved = std::move(simpleArray);
+	print(moved);
+
+	MatrixArray<int> other{ 100, 200 };
+	other = std::move(simpleArray);  // перемещающее присваивание
+	print(other);
 	std::cout << std::endl << "****************" << std::endl;
 	
 	/*

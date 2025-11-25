@@ -1,5 +1,6 @@
 #pragma once
 
+//базовый класс массива (емкость не измен€етс€)
 template <typename T>
 class Array {
 public:
@@ -9,14 +10,14 @@ public:
     //  онструктор емкости (пустой массив)
     Array(size_t capacity) : data(new T[capacity]), size_(0), capacity_(capacity) {}
 
-    //  онструктор размера (заполненный default значени€ми)
-    /*Array(size_t size, const T& value = T{})
+    //  онструктор размера (заполненный заданными значени€ми)
+    Array(size_t size, const T& value)
         : data(new T[size]), size_(size), capacity_(size)
     {
         for (size_t i = 0; i < size_; ++i) {
             data[i] = value;
         }
-    }*/
+    }
 
     //конструктор предоставленных данных
     Array(std::initializer_list<T> init) : size_(init.size()), capacity_(init.size()) {
@@ -163,6 +164,12 @@ protected:
 public:
     class Iterator {
     public:
+        using iterator_category = std::forward_iterator_tag;
+        using value_type = T;
+        using difference_type = std::ptrdiff_t;
+        using pointer = T*;
+        using reference = T&;
+
         Iterator() : ptr(nullptr) {}
         Iterator(T* item) : ptr(item) {}
         Iterator(const Iterator& other) : ptr(other.ptr) {}

@@ -12,7 +12,7 @@ endif()
 project ("Arrays")
 
 # Add source to this project's executable.
-add_executable (Arrays "src/main.cpp" "headers/VectorArray.h" "headers/FactorArray.h" "headers/List.h" "headers/MatrixArray.h" "headers/FixedArray.h" "headers/MatrixObjArray.h")
+add_executable (Arrays "src/main.cpp" "headers/TestArrays.h")
 
 # Указываем где искать заголовки
 target_include_directories(Arrays PRIVATE

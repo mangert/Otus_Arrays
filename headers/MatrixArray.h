@@ -10,11 +10,11 @@ public:
         data = new Array<T>*[1];  // начинаем с одной строки
         data[0] = new Array<T>(row_len);  // каждая строка - указатель на Array<T>
         capacity_ = row_len;
-        size_ = 0;
+        size_ = 0;       
     }
 
     // Конструктор размера (заполненный default значениями)    
-    /*MatrixArray(size_t size, size_t row_length = 10)
+    MatrixArray(size_t size, size_t row_length)
         : row_len(row_length), size_(size) {
         if (size_ == 0) {
             // Пустой массив
@@ -32,7 +32,7 @@ public:
                 data[row] = Array<T>(row_len, T{});
             }
         }
-    }*/
+    }
 
     //конструктор предоставленных данных     
     using InitList = std::initializer_list<T>;  // псевдоним
@@ -47,11 +47,9 @@ public:
         }        
         else {            
             size_t row_count = (size_ - 1) / row_len + 1;
-            capacity_ = row_count * row_len;
-            std::cout << row_count << "  " << row_len << std::endl;
+            capacity_ = row_count * row_len;          
            
-            data = new Array<T>*[row_count];
-            
+            data = new Array<T>*[row_count];            
             for (size_t i = 0; i != row_count; ++i) {
                 data[i] = new Array<T>(row_len);                
             }
@@ -244,13 +242,13 @@ protected:
 
     void shift_up(size_t idx) {
         
-        if (idx >= size_) throw std::invalid_argument("Index out of range");        
+        if (idx > size_) throw std::invalid_argument("Index out of range");        
         for (size_t i = idx; i != size_; ++i) {
             // Прямой расчет индексов
-            size_t row_curr = i / row_len;
-            size_t col_curr = i % row_len;
-            size_t row_next = (i + 1) / row_len;
-            size_t col_next = (i + 1) % row_len;
+            size_t row_curr = (i - 1) / row_len;
+            size_t col_curr = (i - 1) % row_len;
+            size_t row_next = i / row_len;
+            size_t col_next = i % row_len;
 
             (*data[row_curr])[col_curr] = std::move((*data[row_next])[col_next]);
         }
@@ -285,10 +283,16 @@ protected:
     size_t size_;
     size_t capacity_;
 
-    //итератор для работы с нашим массивом
+//итератор для работы с нашим массивом
 public:
     class Iterator {
     public:
+        using iterator_category = std::forward_iterator_tag;
+        using value_type = T;
+        using difference_type = std::ptrdiff_t;
+        using pointer = T*;
+        using reference = T&;
+
         Iterator() : matrix(nullptr), flat_index(0) {}
         Iterator(MatrixArray* mat, size_t idx = 0) : matrix(mat), flat_index(idx) {}
         Iterator(const Iterator& other) : matrix(other.matrix), flat_index(other.flat_index) {}
