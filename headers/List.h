@@ -160,7 +160,7 @@ public:
 
 	//вставка на позицию
 	template<typename U>
-	void insert(U&& value, size_t idx) {
+	void push(U&& value, size_t idx) {
 
 		//проверяем, что тип списка и тип добавляемого элемента совпадают
 		static_assert(std::is_same_v<std::decay_t<U>, T>,

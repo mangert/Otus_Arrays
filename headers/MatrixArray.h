@@ -18,18 +18,18 @@ public:
         : row_len(row_length), size_(size) {
         if (size_ == 0) {
             // Пустой массив
-            data = new Array<T>[1];
-            data[0] = Array<T>(row_len);
+            data = new Array<T>* [1];
+            data[0] = new Array<T>(row_len);
             capacity_ = row_len;
         }
         else {
             // Непустой массив
             size_t row_count = (size_ + row_len - 1) / row_len;
             capacity_ = row_count * row_len;
-            data = new Array<T>[row_count];
+            data = new Array<T>* [row_count];
 
             for (size_t row = 0; row < row_count; ++row) {
-                data[row] = Array<T>(row_len, T{});
+                data[row] = new Array<T>(row_len, T{});
             }
         }
     }

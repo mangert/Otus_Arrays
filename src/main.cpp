@@ -31,11 +31,34 @@ void print(MatrixArray<int>& list) {
 int main() {
 	setlocale(LC_ALL, "Russian");
 
+	const size_t init_size = 1;
+	const size_t step_size = 10;
+	const size_t max_elements = 1000000;
+	
 	std::cout << "1. Single array" << std::endl;
-	TestArrays<SingleArray, int> singleTest{ 1, 10, 100000 };
-	std::cout << "Testing SingleArray push_back:" << std::endl;
-	singleTest.test_push_back();
+	TestArrays<SingleArray, int> singleTest{ init_size, step_size, max_elements };
+	singleTest.complex_test();
+	std::cout << "\n-----------end test-------------\n\n";
 
+	std::cout << "2. Vector array" << std::endl;
+	TestArrays<VectorArray, int, 10> vectorTest{ init_size, step_size, max_elements };
+	vectorTest.complex_test();
+	std::cout << "\n-----------end test-------------\n\n";
+
+	std::cout << "3. Factor array" << std::endl;
+	TestArrays<FactorArray, int, 2> factorTest{ init_size, step_size, max_elements };
+	factorTest.complex_test();
+	std::cout << "\n-----------end test-------------\n\n";
+	
+	std::cout << "4. List" << std::endl;
+	TestArrays<List, int> listTest{ init_size, step_size, max_elements };
+	listTest.complex_test();	
+	std::cout << "\n-----------end test-------------\n\n";
+	
+	std::cout << "5. Matrix Array" << std::endl;
+	TestArrays<MatrixArray, int> matirixTest{ init_size, step_size, max_elements };
+	matirixTest.complex_test();
+	std::cout << "\n-----------end test-------------\n\n";
 	
 	/*
 	std::cout << "Матричный массив" << std::endl;
@@ -151,7 +174,7 @@ int main() {
 		print(list);
 		std::cout << std::endl << "****************" << std::endl;
 
-		list.insert(13, 0);
+		list.push(13, 0);
 		print(list);
 		std::cout << std::endl << "****************" << std::endl;
 	}

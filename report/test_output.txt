@@ -1,0 +1,198 @@
+1. Single array
+Complex test
+
+------------- Push back -------------
+Push back 1 elements: 4 us, array capacity 3, fullness 100%
+Push back 10 elements: 12 us, array capacity 13, fullness 100%
+Push back 100 elements: 80 us, array capacity 113, fullness 100%
+Push back 1000 elements: 2249 us, array capacity 1113, fullness 100%
+Push back 10000 elements: 296412 us, array capacity 11113, fullness 100%
+Push back 100000 elements: 16832971 us, array capacity 111113, fullness 100%
+Push back 1000000 elements: 2419888517 us, array capacity 1111113, fullness 100%
+
+-------------------------------------
+
+----------- Random access -----------
+Index 277778 get in: 0 us
+Index 555556 get in: 0 us
+Index 833334 get in: 0 us
+
+-------------------------------------
+
+----------- Random delete -----------
+Index 277778 deleted in: 2527 us
+Index 555556 deleted in: 1705 us
+Index 833334 deleted in: 931 us
+
+------------- Random push -----------
+Index 277777 inserted in: 2556 us
+Index 555555 inserted in: 1801 us
+Index 833331 inserted in: 902 us
+
+-------------------------------------
+Total container size 1111113
+Total container capacity 1111113
+Total container size in bytes 4444452
+-------------------------------------
+
+-----------end test-------------
+
+2. Vector array
+Complex test
+
+------------- Push back -------------
+Push back 1 elements: 0 us, array capacity 11, fullness 27%
+Push back 10 elements: 4 us, array capacity 21, fullness 61%
+Push back 100 elements: 16 us, array capacity 121, fullness 93%
+Push back 1000 elements: 297 us, array capacity 1121, fullness 99%
+Push back 10000 elements: 18322 us, array capacity 11121, fullness 99%
+Push back 100000 elements: 1643404 us, array capacity 111121, fullness 99%
+Push back 1000000 elements: 246824419 us, array capacity 1111121, fullness 99%
+
+-------------------------------------
+
+----------- Random access -----------
+Index 277778 get in: 0 us
+Index 555556 get in: 0 us
+Index 833334 get in: 0 us
+
+-------------------------------------
+
+----------- Random delete -----------
+Index 277778 deleted in: 2458 us
+Index 555556 deleted in: 1562 us
+Index 833334 deleted in: 963 us
+
+------------- Random push -----------
+Index 277777 inserted in: 2454 us
+Index 555555 inserted in: 1756 us
+Index 833331 inserted in: 1067 us
+
+-------------------------------------
+Total container size 1111113
+Total container capacity 1111121
+Total container size in bytes 4444484
+-------------------------------------
+
+-----------end test-------------
+
+3. Factor array
+Complex test
+
+------------- Push back -------------
+Push back 1 elements: 2 us, array capacity 4, fullness 75%
+Push back 10 elements: 5 us, array capacity 16, fullness 81%
+Push back 100 elements: 13 us, array capacity 128, fullness 88%
+Push back 1000 elements: 87 us, array capacity 2048, fullness 54%
+Push back 10000 elements: 255 us, array capacity 16384, fullness 67%
+Push back 100000 elements: 2030 us, array capacity 131072, fullness 84%
+Push back 1000000 elements: 21008 us, array capacity 2097152, fullness 52%
+
+-------------------------------------
+
+----------- Random access -----------
+Index 277778 get in: 0 us
+Index 555556 get in: 0 us
+Index 833334 get in: 0 us
+
+-------------------------------------
+
+----------- Random delete -----------
+Index 277778 deleted in: 2595 us
+Index 555556 deleted in: 1954 us
+Index 833334 deleted in: 796 us
+
+------------- Random push -----------
+Index 277777 inserted in: 2762 us
+Index 555555 inserted in: 1907 us
+Index 833331 inserted in: 894 us
+
+-------------------------------------
+Total container size 1111113
+Total container capacity 2097152
+Total container size in bytes 8388608
+-------------------------------------
+
+-----------end test-------------
+
+4. List
+Complex test
+
+------------- Push back -------------
+Push back 1 elements: 3 us, array capacity 3, fullness 100%
+Push back 10 elements: 14 us, array capacity 13, fullness 100%
+Push back 100 elements: 24 us, array capacity 113, fullness 100%
+Push back 1000 elements: 237 us, array capacity 1113, fullness 100%
+Push back 10000 elements: 1647 us, array capacity 11113, fullness 100%
+Push back 100000 elements: 19331 us, array capacity 111113, fullness 100%
+Push back 1000000 elements: 185430 us, array capacity 1111113, fullness 100%
+
+-------------------------------------
+
+----------- Random access -----------
+Index 277778 get in: 8826 us
+Index 555556 get in: 18020 us
+Index 833334 get in: 26508 us
+
+-------------------------------------
+
+----------- Random delete -----------
+Index 277778 deleted in: 8689 us
+Index 555556 deleted in: 18367 us
+Index 833334 deleted in: 26452 us
+
+------------- Random push -----------
+Index 277777 inserted in: 8738 us
+Index 555555 inserted in: 18469 us
+Index 833331 inserted in: 26739 us
+
+-------------------------------------
+Total container size 1111113
+Total container capacity 1111113
+Total container size in bytes 4444452
+-------------------------------------
+
+-----------end test-------------
+
+5. Matrix Array
+Complex test
+
+------------- Push back -------------
+Push back 1 elements: 0 us, array capacity 10, fullness 30%
+Push back 10 elements: 5 us, array capacity 20, fullness 65%
+Push back 100 elements: 19 us, array capacity 120, fullness 94%
+Push back 1000 elements: 188 us, array capacity 1120, fullness 99%
+Push back 10000 elements: 3334 us, array capacity 11120, fullness 99%
+Push back 100000 elements: 200511 us, array capacity 111120, fullness 99%
+Push back 1000000 elements: 19406425 us, array capacity 1111120, fullness 99%
+
+-------------------------------------
+
+----------- Random access -----------
+Index 277778 get in: 0 us
+Index 555556 get in: 0 us
+Index 833334 get in: 0 us
+
+-------------------------------------
+
+----------- Random delete -----------
+Index 277778 deleted in: 38094 us
+Index 555556 deleted in: 25381 us
+Index 833334 deleted in: 12888 us
+
+------------- Random push -----------
+Index 277777 inserted in: 39947 us
+Index 555555 inserted in: 26222 us
+Index 833331 inserted in: 13359 us
+
+-------------------------------------
+Total container size 1111113
+Total container capacity 1111120
+Total container size in bytes 4444480
+-------------------------------------
+
+-----------end test-------------
+
+
+D:\Otus_Algo\Arrays\out\build\x64-debug\Arrays.exe (process 4408) exited with code 0 (0x0).
+Press any key to close this window . . .

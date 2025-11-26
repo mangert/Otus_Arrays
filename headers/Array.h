@@ -1,4 +1,6 @@
 #pragma once
+#include <stdexcept>  // для std::runtime_error
+#include <new>        // для std::bad_alloc
 
 //базовый класс массива (емкость не изменяется)
 template <typename T>
@@ -145,15 +147,24 @@ protected:
         --size_;
     }
     //служебная фукнция изменения размера
-    virtual void resize(size_t new_capacity) {
-        T* new_data = new T[new_capacity];
-        for (size_t i = 0; i < size_; ++i) {
-            new_data[i] = std::move(data[i]);
+    virtual void resize(size_t new_capacity) {      
+
+        try {
+            T* new_data = new T[new_capacity];
+
+            for (size_t i = 0; i < size_; ++i) {
+                new_data[i] = std::move(data[i]);
+            }
+
+            delete[] data;
+            data = new_data;
+            capacity_ = new_capacity;
+
         }
-        delete[] data;
-        data = new_data;
-        capacity_ = new_capacity;
-    }    
+        catch (const std::bad_alloc& e) {
+            throw std::runtime_error("Failed to allocate memory for resize");
+        }
+    }
     
 protected:
     T* data;
