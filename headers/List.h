@@ -221,13 +221,14 @@ public:
 		return data;
 	}
 
-	//итератор для работы с нашим списком
+//итератор для работы с нашим списком
 public:
 	class ListIterator {
 	public:
 		ListIterator() : node_ptr(nullptr) {}
 		ListIterator(Node* node) : node_ptr(node) {}
-		ListIterator(const ListIterator& other) : node_ptr(other.node_ptr) {}
+		ListIterator(const Node* node) : node_ptr(const_cast<Node*>(node)) {}
+		ListIterator(const ListIterator& other) : node_ptr(other.node_ptr) {}		
 
 		T& operator*() { return node_ptr->data; }
 		const T& operator*() const { return node_ptr->data; }
@@ -258,7 +259,10 @@ public:
 	};
 	// Итераторы
 	ListIterator begin() { return ListIterator(head); }
-	ListIterator end() { return ListIterator(nullptr); }
+	ListIterator end() { return ListIterator(); }
+
+	ListIterator begin() const { return ListIterator(head); }
+	ListIterator end() const { return ListIterator(); }
 
 private:
 	Node* head = nullptr;

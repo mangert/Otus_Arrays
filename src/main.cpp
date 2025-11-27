@@ -6,6 +6,9 @@
 #include "MatrixArray.h"
 #include "List.h"
 #include "TestArrays.h"
+#include "PriorityQueue.h"
+#include "QueueTester.h"
+
 /*
 void print(Array<int>& array) {
 
@@ -31,6 +34,22 @@ void print(MatrixArray<int>& list) {
 int main() {
 	setlocale(LC_ALL, "Russian");
 
+	PriorityQueue<std::string> m_queue; [](int x, int y) -> bool { return true; };
+	QueueTester<std::string> q_tester(&m_queue, 
+		[](std::string name, size_t i) ->std::string { return name + " * " + std::to_string(i); });
+
+	q_tester.test(5);
+	
+	/*
+	PriorityQueue<int> queue;
+	std::cout << queue.is_empty() << std::endl;
+	queue.enqueue(10, 1);
+	queue.enqueue(11, 0);
+	std::cout << queue.is_empty() << std::endl;
+	std::cout << queue.dequeue().value() << std::endl;
+	*/
+
+	/*
 	const size_t init_size = 1;
 	const size_t step_size = 10;
 	const size_t max_elements = 1000000;
@@ -59,7 +78,7 @@ int main() {
 	TestArrays<MatrixArray, int> matirixTest{ init_size, step_size, max_elements };
 	matirixTest.complex_test();
 	std::cout << "\n-----------end test-------------\n\n";
-	
+	*/
 	/*
 	std::cout << "Матричный массив" << std::endl;
 	MatrixArray<int> simpleArray{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };	
