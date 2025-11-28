@@ -1,12 +1,12 @@
-#pragma once
+п»ї#pragma once
 
 template <typename T>
 class List {
 public:
 	struct Node {
-		T data; //данные
+		T data; //РґР°РЅРЅС‹Рµ
 		Node* next;
-		//конструкторы
+		//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 		Node() : next(nullptr) {};
 		Node(T data) : data(data), next(nullptr) {};
 		Node(const Node& other) = delete;
@@ -17,31 +17,31 @@ public:
 		~Node() = default;
 	};
 
-	// Конструкторы
-	List() = default;  // пустой список
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
+	List() = default;  // РїСѓСЃС‚РѕР№ СЃРїРёСЃРѕРє
 
-	// Из initializer_list
+	// РР· initializer_list
 	List(std::initializer_list<T> init) {
 		for (const auto& item : init) {
 			push_back(item);
 		}
 	};
 
-	// Из количества с default значениями
+	// РР· РєРѕР»РёС‡РµСЃС‚РІР° СЃ default Р·РЅР°С‡РµРЅРёСЏРјРё
 	List(size_t count, const T& value = T{}) {
 		for (size_t i = 0; i < count; ++i) {
 			push_back(value);
 		}
 	};
 
-	// Конструктор копирования
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 	List(const List& other) {
 		for (const auto& item : other) {
 			push_back(item);
 		}
 	};
 
-	// Конструктор перемещения
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРµСЂРµРјРµС‰РµРЅРёСЏ
 	List(List&& other) noexcept
 		: head(other.head), tail(other.tail), size_(other.size_) {
 		other.head = nullptr;
@@ -53,7 +53,7 @@ public:
 		clear();
 	};	
 
-	// Оператор копирующего присваивания
+	// РћРїРµСЂР°С‚РѕСЂ РєРѕРїРёСЂСѓСЋС‰РµРіРѕ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
 	List& operator=(const List& other) {
 		clear();
 		for (const auto& item : other) {
@@ -62,7 +62,7 @@ public:
 		return *this;
 	};
 	
-	// Оператор перемещающего присваивания
+	// РћРїРµСЂР°С‚РѕСЂ РїРµСЂРµРјРµС‰Р°СЋС‰РµРіРѕ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
 	List& operator=(List&& other) noexcept {
 		clear();
 		head = other.head;
@@ -74,7 +74,7 @@ public:
 		return *this;
 	};
 
-	//получение информации о списке
+	//РїРѕР»СѓС‡РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЃРїРёСЃРєРµ
 	size_t size() const {
 		return size_;
 	}
@@ -83,9 +83,9 @@ public:
 		return head == nullptr;
 	}
 
-	//функции для работы со списком
+	//С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃРїРёСЃРєРѕРј
 	
-	//oчистка списка
+	//oС‡РёСЃС‚РєР° СЃРїРёСЃРєР°
 	void clear() {
 		Node* current = head;
 		while (current != nullptr) {
@@ -97,7 +97,7 @@ public:
 		tail = nullptr;
 		size_ = 0;
 	}	
-	//доступ к данным
+	//РґРѕСЃС‚СѓРї Рє РґР°РЅРЅС‹Рј
 	T& operator[] (size_t idx) {
 		if (idx >= size_) throw std::invalid_argument("Index out of range");
 		Node* item = head;
@@ -116,11 +116,11 @@ public:
 		return item->data;
 	}
 
-	//добавление в конец
+	//РґРѕР±Р°РІР»РµРЅРёРµ РІ РєРѕРЅРµС†
 	template<typename U>
 	void push_back(U&& value) {
 
-		//проверяем, что тип списка и тип добавляемого элемента совпадают
+		//РїСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ С‚РёРї СЃРїРёСЃРєР° Рё С‚РёРї РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р° СЃРѕРІРїР°РґР°СЋС‚
 		static_assert(std::is_same_v<std::decay_t<U>, T>,
 			"Exact type match required");
 
@@ -137,11 +137,11 @@ public:
 		++size_;
 	};
 
-	//добавление в начало
+	//РґРѕР±Р°РІР»РµРЅРёРµ РІ РЅР°С‡Р°Р»Рѕ
 	template<typename U>
 	void push_front(U&& value) {
 
-		//проверяем, что тип списка и тип добавляемого элемента совпадают
+		//РїСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ С‚РёРї СЃРїРёСЃРєР° Рё С‚РёРї РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р° СЃРѕРІРїР°РґР°СЋС‚
 		static_assert(std::is_same_v<std::decay_t<U>, T>,
 			"Exact type match required");
 
@@ -158,14 +158,14 @@ public:
 		++size_;
 	}
 
-	//вставка на позицию
+	//РІСЃС‚Р°РІРєР° РЅР° РїРѕР·РёС†РёСЋ
 	template<typename U>
 	void push(U&& value, size_t idx) {
 
-		//проверяем, что тип списка и тип добавляемого элемента совпадают
+		//РїСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ С‚РёРї СЃРїРёСЃРєР° Рё С‚РёРї РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р° СЃРѕРІРїР°РґР°СЋС‚
 		static_assert(std::is_same_v<std::decay_t<U>, T>,
 			"Exact type match required");
-		//проверяем индекс
+		//РїСЂРѕРІРµСЂСЏРµРј РёРЅРґРµРєСЃ
 		if (idx > size_) throw std::invalid_argument("Index out of range");
 
 		if (idx == size_) {
@@ -179,17 +179,17 @@ public:
 
 		Node* new_node = new Node(std::forward<U>(value));
 		Node* position = head;
-		//доходим до нужного элемента
+		//РґРѕС…РѕРґРёРј РґРѕ РЅСѓР¶РЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 		for (size_t counter = 1; counter < idx; ++counter) {
 			position = position->next;
 		};
-		//добавляем
+		//РґРѕР±Р°РІР»СЏРµРј
 		new_node->next = position->next;
 		position->next = new_node;		
 		++size_;
 	}
 
-	//удаление элемента
+	//СѓРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р°
 	T del(size_t idx) {
 		if (idx >= size_) throw std::invalid_argument("Index out of range");
 
@@ -221,11 +221,11 @@ public:
 		return data;
 	}
 
-//итератор для работы с нашим списком
+//РёС‚РµСЂР°С‚РѕСЂ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РЅР°С€РёРј СЃРїРёСЃРєРѕРј
 public:
 	class ListIterator {
 	public:
-		//для совместимости с STL
+		//РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃ STL
 		using iterator_category = std::forward_iterator_tag;
 		using value_type = T;
 		using difference_type = std::ptrdiff_t;
@@ -264,7 +264,7 @@ public:
 	private:
 		Node* node_ptr;
 	};
-	// Итераторы
+	// РС‚РµСЂР°С‚РѕСЂС‹
 	ListIterator begin() { return ListIterator(head); }
 	ListIterator end() { return ListIterator(); }
 

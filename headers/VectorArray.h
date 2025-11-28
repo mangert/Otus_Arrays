@@ -1,21 +1,21 @@
-#pragma once
+п»ї#pragma once
 #include "Array.h"
 
-//Увеличение на фиксированное количество элементов (задается в параметре шаблона)
+//РЈРІРµР»РёС‡РµРЅРёРµ РЅР° С„РёРєСЃРёСЂРѕРІР°РЅРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ (Р·Р°РґР°РµС‚СЃСЏ РІ РїР°СЂР°РјРµС‚СЂРµ С€Р°Р±Р»РѕРЅР°)
 template <typename T, size_t S>
 class VectorArray : public Array<T> {
 public:
 
-    using Array<T>::Array;  // наследуем конструкторы базового класса
-    using Array<T>::operator=;  // наследуем операторы для базовой части
+    using Array<T>::Array;  // РЅР°СЃР»РµРґСѓРµРј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°
+    using Array<T>::operator=;  // РЅР°СЃР»РµРґСѓРµРј РѕРїРµСЂР°С‚РѕСЂС‹ РґР»СЏ Р±Р°Р·РѕРІРѕР№ С‡Р°СЃС‚Рё
 
-    // Конструктор копирования
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
     VectorArray(const VectorArray<T, S>& other) : Array(other) {}
 
-    // Конструктор перемещения
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРµСЂРµРјРµС‰РµРЅРёСЏ
     VectorArray(VectorArray<T, S>&& other) noexcept : Array(std::move(other)) {}
 
-    //переопределяемые функции    
+    //РїРµСЂРµРѕРїСЂРµРґРµР»СЏРµРјС‹Рµ С„СѓРЅРєС†РёРё    
     void push_back(const T& item) override {
         if (this->free_space() == 0) {
             this->resize(this->capacity_ + step);  // + S

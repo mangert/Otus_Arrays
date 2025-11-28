@@ -1,8 +1,8 @@
-#pragma once
+п»ї#pragma once
 #include <optional>
 #include "List.h"
 
-//очередь с дискретными приоритетами
+//РѕС‡РµСЂРµРґСЊ СЃ РґРёСЃРєСЂРµС‚РЅС‹РјРё РїСЂРёРѕСЂРёС‚РµС‚Р°РјРё
 template<typename T>
 class PriorityQueue {
 
@@ -15,11 +15,11 @@ public:
     
     virtual ~PriorityQueue() = default;
     
-    //добавляем элемент в очередь
+    //РґРѕР±Р°РІР»СЏРµРј СЌР»РµРјРµРЅС‚ РІ РѕС‡РµСЂРµРґСЊ
     virtual void enqueue(const T& item, size_t priority) {
-        // Добавляем в конец списка соответствующего приоритета
+        // Р”РѕР±Р°РІР»СЏРµРј РІ РєРѕРЅРµС† СЃРїРёСЃРєР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ РїСЂРёРѕСЂРёС‚РµС‚Р°
         while (priority >= buckets.size()) {
-            buckets.push_back(List<T>());  // добавляем пустые bucket'ы
+            buckets.push_back(List<T>());  // РґРѕР±Р°РІР»СЏРµРј РїСѓСЃС‚С‹Рµ bucket'С‹
         };
         if (priority > current_max_priority) {
             current_max_priority = priority;
@@ -27,27 +27,27 @@ public:
         buckets[priority].push_back(item);
     };
 
-    //извлекаем элемент из очереди
+    //РёР·РІР»РµРєР°РµРј СЌР»РµРјРµРЅС‚ РёР· РѕС‡РµСЂРµРґРё
     virtual std::optional<T> dequeue() {
         for (size_t i = 0; i <= current_max_priority; ++i) {
             if (!buckets[i].is_empty()) {
                 return buckets[i].del(0);
             }
         }
-        return std::nullopt;  // явно показывает "нет значения"
+        return std::nullopt;  // СЏРІРЅРѕ РїРѕРєР°Р·С‹РІР°РµС‚ "РЅРµС‚ Р·РЅР°С‡РµРЅРёСЏ"
     };
 
-    //посмотреть без извлечения
+    //РїРѕСЃРјРѕС‚СЂРµС‚СЊ Р±РµР· РёР·РІР»РµС‡РµРЅРёСЏ
     virtual std::optional<T> peek() const {
         for (size_t i = 0; i <= current_max_priority; ++i) {
             if (!buckets[i].is_empty()) {
-                return buckets[i][0];  // первый элемент высшего приоритета
+                return buckets[i][0];  // РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РІС‹СЃС€РµРіРѕ РїСЂРёРѕСЂРёС‚РµС‚Р°
             }
         }
         return std::nullopt;
     }
 
-    //очистка
+    //РѕС‡РёСЃС‚РєР°
     virtual void clear() {
         for (auto& bucket : buckets) {
             bucket.clear();
@@ -55,8 +55,8 @@ public:
         current_max_priority = 0;
     }
 
-    // Статистические данные
-    //проверяем, не пустая ли очередь
+    // РЎС‚Р°С‚РёСЃС‚РёС‡РµСЃРєРёРµ РґР°РЅРЅС‹Рµ
+    //РїСЂРѕРІРµСЂСЏРµРј, РЅРµ РїСѓСЃС‚Р°СЏ Р»Рё РѕС‡РµСЂРµРґСЊ
     virtual bool is_empty() const {
         for (auto& bucket : buckets) {
             if (!bucket.is_empty())
@@ -65,7 +65,7 @@ public:
         return true;
     };
 
-    //общий размер
+    //РѕР±С‰РёР№ СЂР°Р·РјРµСЂ
     virtual size_t size() const {
         size_t total = 0;
         for (const auto& bucket : buckets) {
@@ -73,12 +73,12 @@ public:
         }
         return total;
     }
-    //характеристики
+    //С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё
     size_t get_max_priority() const { return current_max_priority; }
     size_t get_buckets_count() const { return buckets.size(); }
 
 private:
-    List<List<T>> buckets;  // buckets[0] - высший приоритет
+    List<List<T>> buckets;  // buckets[0] - РІС‹СЃС€РёР№ РїСЂРёРѕСЂРёС‚РµС‚
     size_t current_max_priority = 0;
 
 };

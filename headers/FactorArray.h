@@ -1,21 +1,21 @@
-#pragma once
+п»ї#pragma once
 #include "Array.h"
 
-//Увеличение с умножением на коэффициент (задается в параметре шаблона)
+//РЈРІРµР»РёС‡РµРЅРёРµ СЃ СѓРјРЅРѕР¶РµРЅРёРµРј РЅР° РєРѕСЌС„С„РёС†РёРµРЅС‚ (Р·Р°РґР°РµС‚СЃСЏ РІ РїР°СЂР°РјРµС‚СЂРµ С€Р°Р±Р»РѕРЅР°)
 template <typename T, size_t F>
 class FactorArray : public Array<T> {
 public:
 
-    using Array<T>::Array;  // наследуем конструкторы базового класса
-    using Array<T>::operator=;  // наследуем операторы для базовой части
+    using Array<T>::Array;  // РЅР°СЃР»РµРґСѓРµРј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°
+    using Array<T>::operator=;  // РЅР°СЃР»РµРґСѓРµРј РѕРїРµСЂР°С‚РѕСЂС‹ РґР»СЏ Р±Р°Р·РѕРІРѕР№ С‡Р°СЃС‚Рё
 
-    // Конструктор копирования
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
     FactorArray(const FactorArray<T, F>& other) : Array(other) {}
 
-    // Конструктор перемещения
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРµСЂРµРјРµС‰РµРЅРёСЏ
     FactorArray(FactorArray<T, F>&& other) noexcept : Array(std::move(other)) {}
 
-    //переопределяемые функции    
+    //РїРµСЂРµРѕРїСЂРµРґРµР»СЏРµРјС‹Рµ С„СѓРЅРєС†РёРё    
     void push_back(const T& item) override {
         if (this->free_space() == 0) {
             this->resize(this->capacity_ * factor);  //*F

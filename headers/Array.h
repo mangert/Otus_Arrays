@@ -1,18 +1,18 @@
-#pragma once
-#include <stdexcept>  // для std::runtime_error
-#include <new>        // для std::bad_alloc
+п»ї#pragma once
+#include <stdexcept>  // РґР»СЏ std::runtime_error
+#include <new>        // РґР»СЏ std::bad_alloc
 
-//базовый класс массива (емкость не изменяется)
+//Р±Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ РјР°СЃСЃРёРІР° (РµРјРєРѕСЃС‚СЊ РЅРµ РёР·РјРµРЅСЏРµС‚СЃСЏ)
 template <typename T>
 class Array {
 public:
-    // Конструкторы
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
     Array() : data(nullptr), size_(0), capacity_(0) {}
 
-    // Конструктор емкости (пустой массив)
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РµРјРєРѕСЃС‚Рё (РїСѓСЃС‚РѕР№ РјР°СЃСЃРёРІ)
     Array(size_t capacity) : data(new T[capacity]), size_(0), capacity_(capacity) {}
 
-    // Конструктор размера (заполненный заданными значениями)
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЂР°Р·РјРµСЂР° (Р·Р°РїРѕР»РЅРµРЅРЅС‹Р№ Р·Р°РґР°РЅРЅС‹РјРё Р·РЅР°С‡РµРЅРёСЏРјРё)
     Array(size_t size, const T& value)
         : data(new T[size]), size_(size), capacity_(size)
     {
@@ -21,7 +21,7 @@ public:
         }
     }
 
-    //конструктор предоставленных данных
+    //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅРЅС‹С… РґР°РЅРЅС‹С…
     Array(std::initializer_list<T> init) : size_(init.size()), capacity_(init.size()) {
         if (size_) {
             data = new T[size_];
@@ -32,7 +32,7 @@ public:
         }
     }
 
-    // Конструктор копирования
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
     Array(const Array& other) : size_(other.size_), capacity_(other.capacity_) {
         data = new T[capacity_];
         for (size_t idx = 0; idx != size_; ++idx) {
@@ -40,7 +40,7 @@ public:
         }
     }
 
-    // Конструктор перемещения
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРµСЂРµРјРµС‰РµРЅРёСЏ
     Array(Array&& other) noexcept
         : data(other.data), size_(other.size_), capacity_(other.capacity_) {
         other.data = nullptr;
@@ -52,7 +52,7 @@ public:
         if (data) { delete[] data; };        
     }
 
-    // Оператор копирующего присваивания
+    // РћРїРµСЂР°С‚РѕСЂ РєРѕРїРёСЂСѓСЋС‰РµРіРѕ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
     Array& operator=(const Array& other) {
         if (this == &other) return *this;
 
@@ -66,7 +66,7 @@ public:
         return *this;
     }
 
-    // Оператор перемещающего присваивания
+    // РћРїРµСЂР°С‚РѕСЂ РїРµСЂРµРјРµС‰Р°СЋС‰РµРіРѕ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
     Array& operator=(Array&& other) noexcept {
         if (this == &other) return *this;
 
@@ -80,7 +80,7 @@ public:
         return *this;
     }
 
-    // доступ к элементам
+    // РґРѕСЃС‚СѓРї Рє СЌР»РµРјРµРЅС‚Р°Рј
     T& operator[] (size_t idx) {
         if (idx >= size_) throw std::invalid_argument("Index out of range");
         return data[idx];
@@ -91,12 +91,12 @@ public:
         return data[idx];
     }
 
-    // Методы для работы с размером
+    // РњРµС‚РѕРґС‹ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ СЂР°Р·РјРµСЂРѕРј
     size_t size() const noexcept { return size_; };
     size_t capacity() const noexcept { return capacity_; };
     bool is_empty() const noexcept { return 0==size_; }
 
-    //медоды для добавления / удаления элементов            
+    //РјРµРґРѕРґС‹ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ / СѓРґР°Р»РµРЅРёСЏ СЌР»РµРјРµРЅС‚РѕРІ            
     virtual void push_back(const T& item) {};
     virtual void push_back(T&& item) {};
 
@@ -110,10 +110,10 @@ public:
         return item;
     }    
 
-    // Служебные функции добавляют один элемент к size в пределах емкости
+    // РЎР»СѓР¶РµР±РЅС‹Рµ С„СѓРЅРєС†РёРё РґРѕР±Р°РІР»СЏСЋС‚ РѕРґРёРЅ СЌР»РµРјРµРЅС‚ Рє size РІ РїСЂРµРґРµР»Р°С… РµРјРєРѕСЃС‚Рё
     void place_at(size_t idx, const T& value) {
         if (idx >= capacity_) throw std::out_of_range("Capacity exceeded");
-        if (idx >= size_) size_ = idx + 1;  // автоматически увеличиваем size
+        if (idx >= size_) size_ = idx + 1;  // Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓРІРµР»РёС‡РёРІР°РµРј size
         data[idx] = value;
     }
 
@@ -122,13 +122,13 @@ public:
         if (idx >= size_) size_ = idx + 1;
         data[idx] = std::move(value);
     }
-//внутренние данные и методы класса
+//РІРЅСѓС‚СЂРµРЅРЅРёРµ РґР°РЅРЅС‹Рµ Рё РјРµС‚РѕРґС‹ РєР»Р°СЃСЃР°
 protected:    
     size_t free_space() {
         return (capacity_ - size_);
     }
-    //служебные функции для сдвига элементов    
-    virtual void shift_down(size_t idx) { //сдвигаем все элементы к концу на 1 начиная с idx)
+    //СЃР»СѓР¶РµР±РЅС‹Рµ С„СѓРЅРєС†РёРё РґР»СЏ СЃРґРІРёРіР° СЌР»РµРјРµРЅС‚РѕРІ    
+    virtual void shift_down(size_t idx) { //СЃРґРІРёРіР°РµРј РІСЃРµ СЌР»РµРјРµРЅС‚С‹ Рє РєРѕРЅС†Сѓ РЅР° 1 РЅР°С‡РёРЅР°СЏ СЃ idx)
         if(!free_space() || idx >= size_) throw std::invalid_argument("Index out of range");
         
         for(size_t i = size_; i > idx; --i) {
@@ -137,7 +137,7 @@ protected:
         ++size_;
     }    
 
-    virtual void shift_up(size_t idx) { //сдвигаем все элементы к началу на 1 начиная с idx)        
+    virtual void shift_up(size_t idx) { //СЃРґРІРёРіР°РµРј РІСЃРµ СЌР»РµРјРµРЅС‚С‹ Рє РЅР°С‡Р°Р»Сѓ РЅР° 1 РЅР°С‡РёРЅР°СЏ СЃ idx)        
         
         if (idx == 0 || idx > size_) throw std::invalid_argument("Index out of range");
 
@@ -146,7 +146,7 @@ protected:
         };
         --size_;
     }
-    //служебная фукнция изменения размера
+    //СЃР»СѓР¶РµР±РЅР°СЏ С„СѓРєРЅС†РёСЏ РёР·РјРµРЅРµРЅРёСЏ СЂР°Р·РјРµСЂР°
     virtual void resize(size_t new_capacity) {      
 
         try {
@@ -171,11 +171,11 @@ protected:
     size_t size_;
     size_t capacity_;
 
-//итератор для работы с нашим массивом
+//РёС‚РµСЂР°С‚РѕСЂ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РЅР°С€РёРј РјР°СЃСЃРёРІРѕРј
 public:
     class Iterator {
     public:
-        //для совместимости с STL
+        //РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃ STL
         using iterator_category = std::forward_iterator_tag;
         using value_type = T;
         using difference_type = std::ptrdiff_t;
@@ -187,25 +187,25 @@ public:
         Iterator(const Iterator& other) : ptr(other.ptr) {}
         ~Iterator() = default;
 
-        // Оператор доступа к членам
+        // РћРїРµСЂР°С‚РѕСЂ РґРѕСЃС‚СѓРїР° Рє С‡Р»РµРЅР°Рј
         T* operator->() const { return ptr; }
 
-        // Обмен
+        // РћР±РјРµРЅ
         void swap(Iterator& other) {
             std::swap(ptr, other.ptr);
         }
 
-        // Присваивание
+        // РџСЂРёСЃРІР°РёРІР°РЅРёРµ
         Iterator& operator=(const Iterator& other) {
             ptr = other.ptr;
             return *this;
         }
 
-        // Разыменование
+        // Р Р°Р·С‹РјРµРЅРѕРІР°РЅРёРµ
         T& operator*() { return *ptr; }
         const T& operator*() const { return *ptr; }
 
-        // Инкремент
+        // РРЅРєСЂРµРјРµРЅС‚
         Iterator& operator++() {
             ++ptr;
             return *this;
@@ -217,7 +217,7 @@ public:
             return tmp;
         }
 
-        // Декремент
+        // Р”РµРєСЂРµРјРµРЅС‚
         Iterator& operator--() {
             --ptr;
             return *this;
@@ -229,14 +229,14 @@ public:
             return tmp;
         }
 
-        // Сравнение
+        // РЎСЂР°РІРЅРµРЅРёРµ
         bool operator==(const Iterator& other) const { return ptr == other.ptr; }
         bool operator!=(const Iterator& other) const { return ptr != other.ptr; }
 
     private:
         T* ptr;
     };
-    // Итераторы
+    // РС‚РµСЂР°С‚РѕСЂС‹
     Iterator begin() { return Iterator(data); }
     Iterator end() { return Iterator(data + size_); }
 };
