@@ -1,0 +1,287 @@
+** Queue tests ************************
+
+
+-----------Sequential queue test -------------
+
+Sequential test  ------------------------------------
+[   0] Fox      added: <Fox -> 0> (priority 1)
+[   1] Rabbit   added: <Rabbit -> 0> (priority 2)
+[   2] Wolf     added: <Wolf -> 0> (priority 0)
+[   3] Fox      added: <Fox -> 1> (priority 1)
+[   4] Rabbit   added: <Rabbit -> 1> (priority 2)
+[   5] Wolf     added: <Wolf -> 1> (priority 0)
+[   6] Fox      added: <Fox -> 2> (priority 1)
+[   7] Rabbit   added: <Rabbit -> 2> (priority 2)
+[   8] Wolf     added: <Wolf -> 2> (priority 0)
+[   9] Fox      added: <Fox -> 3> (priority 1)
+[  10] Rabbit   added: <Rabbit -> 3> (priority 2)
+[  11] Wolf     added: <Wolf -> 3> (priority 0)
+[  12] Fox      added: <Fox -> 4> (priority 1)
+[  13] Rabbit   added: <Rabbit -> 4> (priority 2)
+[  14] Wolf     added: <Wolf -> 4> (priority 0)
+[  15] Fox      added: <Fox -> 5> (priority 1)
+[  16] Rabbit   added: <Rabbit -> 5> (priority 2)
+[  17] Wolf     added: <Wolf -> 5> (priority 0)
+[  18] Fox      added: <Fox -> 6> (priority 1)
+[  19] Rabbit   added: <Rabbit -> 6> (priority 2)
+[  20] Wolf     added: <Wolf -> 6> (priority 0)
+[  21] Fox      added: <Fox -> 7> (priority 1)
+[  22] Fox      added: <Fox -> 8> (priority 1)
+[  23] Wolf     added: <Wolf -> 7> (priority 0)
+[  24] Rabbit   added: <Rabbit -> 7> (priority 2)
+[  25] Fox      added: <Fox -> 9> (priority 1)
+[  26] Wolf     added: <Wolf -> 8> (priority 0)
+[  27] Rabbit   added: <Rabbit -> 8> (priority 2)
+[  28] Rabbit   added: <Rabbit -> 9> (priority 2)
+[  29] Wolf     added: <Wolf -> 9> (priority 0)
+[  30] Fox      added: <Fox -> 10> (priority 1)
+[  31] Rabbit   added: <Rabbit -> 10> (priority 2)
+[  32] Wolf     added: <Wolf -> 10> (priority 0)
+[  33] Fox      added: <Fox -> 11> (priority 1)
+[  34] Rabbit   added: <Rabbit -> 11> (priority 2)
+[  35] Wolf     added: <Wolf -> 11> (priority 0)
+[  36] Fox      added: <Fox -> 12> (priority 1)
+[  37] Rabbit   added: <Rabbit -> 12> (priority 2)
+[  38] Wolf     added: <Wolf -> 12> (priority 0)
+[  39] Fox      added: <Fox -> 13> (priority 1)
+[  40] Rabbit   added: <Rabbit -> 13> (priority 2)
+[  41] Wolf     added: <Wolf -> 13> (priority 0)
+[  42] Fox      added: <Fox -> 14> (priority 1)
+[  43] Rabbit   added: <Rabbit -> 14> (priority 2)
+[  44] Wolf     added: <Wolf -> 14> (priority 0)
+[  45] Fox      added: <Fox -> 15> (priority 1)
+[  46] Rabbit   added: <Rabbit -> 15> (priority 2)
+[  47] Wolf     added: <Wolf -> 15> (priority 0)
+[  48] Fox      added: <Fox -> 16> (priority 1)
+[  49] Rabbit   added: <Rabbit -> 16> (priority 2)
+[  50] Wolf     added: <Wolf -> 16> (priority 0)
+[  51] Fox      added: <Fox -> 17> (priority 1)
+[  52] Rabbit   added: <Rabbit -> 17> (priority 2)
+[  53] Wolf     added: <Wolf -> 17> (priority 0)
+[  54] Fox      added: <Fox -> 18> (priority 1)
+[  55] Rabbit   added: <Rabbit -> 18> (priority 2)
+[  56] Wolf     added: <Wolf -> 18> (priority 0)
+[  57] Fox      added: <Fox -> 19> (priority 1)
+[  58] Rabbit   added: <Rabbit -> 19> (priority 2)
+[  59] Wolf     added: <Wolf -> 19> (priority 0)
+
+Items added 60
+Time spent 278150us
+------------------------------------
+[  60] Mouse    consumed: <Wolf -> 0>
+[  61] Mouse    consumed: <Wolf -> 1>
+[  62] Mouse    consumed: <Wolf -> 2>
+[  63] Mouse    consumed: <Wolf -> 3>
+[  64] Mouse    consumed: <Wolf -> 4>
+[  65] Mouse    consumed: <Wolf -> 5>
+[  66] Mouse    consumed: <Wolf -> 6>
+[  67] Mouse    consumed: <Wolf -> 7>
+[  68] Mouse    consumed: <Wolf -> 8>
+[  69] Mouse    consumed: <Wolf -> 9>
+[  70] Mouse    consumed: <Wolf -> 10>
+[  71] Mouse    consumed: <Wolf -> 11>
+[  72] Mouse    consumed: <Wolf -> 12>
+[  73] Mouse    consumed: <Wolf -> 13>
+[  74] Mouse    consumed: <Wolf -> 14>
+[  75] Mouse    consumed: <Wolf -> 15>
+[  76] Mouse    consumed: <Wolf -> 16>
+[  77] Mouse    consumed: <Wolf -> 17>
+[  78] Mouse    consumed: <Wolf -> 18>
+[  79] Mouse    consumed: <Wolf -> 19>
+[  80] Mouse    consumed: <Fox -> 0>
+[  81] Mouse    consumed: <Fox -> 1>
+[  82] Mouse    consumed: <Fox -> 2>
+[  83] Mouse    consumed: <Fox -> 3>
+[  84] Mouse    consumed: <Fox -> 4>
+[  85] Mouse    consumed: <Fox -> 5>
+[  86] Mouse    consumed: <Fox -> 6>
+[  87] Mouse    consumed: <Fox -> 7>
+[  88] Mouse    consumed: <Fox -> 8>
+[  89] Mouse    consumed: <Fox -> 9>
+[  90] Mouse    consumed: <Fox -> 10>
+[  91] Mouse    consumed: <Fox -> 11>
+[  92] Mouse    consumed: <Fox -> 12>
+[  93] Mouse    consumed: <Fox -> 13>
+[  94] Mouse    consumed: <Fox -> 14>
+[  95] Mouse    consumed: <Fox -> 15>
+[  96] Mouse    consumed: <Fox -> 16>
+[  97] Mouse    consumed: <Fox -> 17>
+[  98] Mouse    consumed: <Fox -> 18>
+[  99] Mouse    consumed: <Fox -> 19>
+[ 100] Mouse    consumed: <Rabbit -> 0>
+[ 101] Mouse    consumed: <Rabbit -> 1>
+[ 102] Mouse    consumed: <Rabbit -> 2>
+[ 103] Mouse    consumed: <Rabbit -> 3>
+[ 104] Mouse    consumed: <Rabbit -> 4>
+[ 105] Mouse    consumed: <Rabbit -> 5>
+[ 106] Mouse    consumed: <Rabbit -> 6>
+[ 107] Mouse    consumed: <Rabbit -> 7>
+[ 108] Mouse    consumed: <Rabbit -> 8>
+[ 109] Mouse    consumed: <Rabbit -> 9>
+[ 110] Mouse    consumed: <Rabbit -> 10>
+[ 111] Mouse    consumed: <Rabbit -> 11>
+[ 112] Mouse    consumed: <Rabbit -> 12>
+[ 113] Mouse    consumed: <Rabbit -> 13>
+[ 114] Mouse    consumed: <Rabbit -> 14>
+[ 115] Mouse    consumed: <Rabbit -> 15>
+[ 116] Mouse    consumed: <Rabbit -> 16>
+[ 117] Mouse    consumed: <Rabbit -> 17>
+[ 118] Mouse    consumed: <Rabbit -> 18>
+[ 119] Mouse    consumed: <Rabbit -> 19>
+Queue is empty!
+
+Items consumed 60
+Time spent 240872us
+
+Test finished   ------------------------------------
+
+-----------Live queue test -------------
+
+Queue live test ------------------------------------
+[   0] Wolf     added: <Wolf -> 0> (priority 0)
+[   1] Fox      added: <Fox -> 0> (priority 1)
+[   2] Rabbit   added: <Rabbit -> 0> (priority 2)
+[   3] Rat      consumed: <Wolf -> 0>
+[   4] Rat      consumed: <Fox -> 0>
+[   5] Fox      added: <Fox -> 1> (priority 1)
+[   6] Rabbit   added: <Rabbit -> 1> (priority 2)
+[   7] Wolf     added: <Wolf -> 1> (priority 0)
+[   8] Rat      consumed: <Wolf -> 1>
+[   9] Fox      added: <Fox -> 2> (priority 1)
+[  10] Rabbit   added: <Rabbit -> 2> (priority 2)
+[  11] Wolf     added: <Wolf -> 2> (priority 0)
+[  12] Rat      consumed: <Wolf -> 2>
+[  13] Fox      added: <Fox -> 3> (priority 1)
+[  14] Rabbit   added: <Rabbit -> 3> (priority 2)
+[  15] Wolf     added: <Wolf -> 3> (priority 0)
+[  16] Rat      consumed: <Wolf -> 3>
+[  17] Rat      consumed: <Fox -> 1>
+[  18] Rat      consumed: <Fox -> 2>
+[  19] Rat      consumed: <Fox -> 3>
+[  20] Fox      added: <Fox -> 4> (priority 1)
+[  21] Rabbit   added: <Rabbit -> 4> (priority 2)
+[  22] Wolf     added: <Wolf -> 4> (priority 0)
+[  23] Rat      consumed: <Wolf -> 4>
+[  24] Fox      added: <Fox -> 5> (priority 1)
+[  25] Rabbit   added: <Rabbit -> 5> (priority 2)
+[  26] Wolf     added: <Wolf -> 5> (priority 0)
+[  27] Rat      consumed: <Wolf -> 5>
+[  28] Fox      added: <Fox -> 6> (priority 1)
+[  29] Rabbit   added: <Rabbit -> 6> (priority 2)
+[  30] Wolf     added: <Wolf -> 6> (priority 0)
+[  31] Rat      consumed: <Wolf -> 6>
+[  32] Fox      added: <Fox -> 7> (priority 1)
+[  33] Rabbit   added: <Rabbit -> 7> (priority 2)
+[  34] Wolf     added: <Wolf -> 7> (priority 0)
+[  35] Rat      consumed: <Wolf -> 7>
+[  36] Fox      added: <Fox -> 8> (priority 1)
+[  37] Rabbit   added: <Rabbit -> 8> (priority 2)
+[  38] Wolf     added: <Wolf -> 8> (priority 0)
+[  39] Rat      consumed: <Wolf -> 8>
+[  40] Fox      added: <Fox -> 9> (priority 1)
+[  41] Rabbit   added: <Rabbit -> 9> (priority 2)
+[  42] Wolf     added: <Wolf -> 9> (priority 0)
+[  43] Rat      consumed: <Wolf -> 9>
+[  44] Rat      consumed: <Fox -> 4>
+[  45] Rat      consumed: <Fox -> 5>
+[  46] Wolf     added: <Wolf -> 10> (priority 0)
+[  47] Fox      added: <Fox -> 10> (priority 1)
+[  48] Rabbit   added: <Rabbit -> 10> (priority 2)
+[  49] Rat      consumed: <Wolf -> 10>
+[  50] Rat      consumed: <Fox -> 6>
+[  51] Rat      consumed: <Fox -> 7>
+[  52] Rat      consumed: <Fox -> 8>
+[  53] Rat      consumed: <Fox -> 9>
+[  54] Rat      consumed: <Fox -> 10>
+[  55] Rabbit   added: <Rabbit -> 11> (priority 2)
+[  56] Wolf     added: <Wolf -> 11> (priority 0)
+[  57] Fox      added: <Fox -> 11> (priority 1)
+[  58] Rat      consumed: <Wolf -> 11>
+[  59] Rat      consumed: <Fox -> 11>
+[  60] Rat      consumed: <Rabbit -> 0>
+[  61] Rat      consumed: <Rabbit -> 1>
+[  62] Rabbit   added: <Rabbit -> 12> (priority 2)
+[  63] Wolf     added: <Wolf -> 12> (priority 0)
+[  64] Fox      added: <Fox -> 12> (priority 1)
+[  65] Rat      consumed: <Wolf -> 12>
+[  66] Rabbit   added: <Rabbit -> 13> (priority 2)
+[  67] Wolf     added: <Wolf -> 13> (priority 0)
+[  68] Fox      added: <Fox -> 13> (priority 1)
+[  69] Rat      consumed: <Wolf -> 13>
+[  70] Rabbit   added: <Rabbit -> 14> (priority 2)
+[  71] Rabbit   added: <Rabbit -> 15> (priority 2)
+[  72] Fox      added: <Fox -> 14> (priority 1)
+[  73] Rat      consumed: <Fox -> 12>
+[  74] Rat      consumed: <Fox -> 13>
+[  75] Rat      consumed: <Fox -> 14>
+[  76] Rat      consumed: <Rabbit -> 2>
+[  77] Rat      consumed: <Rabbit -> 3>
+[  78] Rat      consumed: <Rabbit -> 4>
+[  79] Rat      consumed: <Rabbit -> 5>
+[  80] Rat      consumed: <Rabbit -> 6>
+[  81] Rabbit   added: <Rabbit -> 16> (priority 2)
+[  82] Rabbit   added: <Rabbit -> 17> (priority 2)
+[  83] Rabbit   added: <Rabbit -> 18> (priority 2)
+[  84] Rat      consumed: <Rabbit -> 7>
+[  85] Rat      consumed: <Rabbit -> 8>
+[  86] Rat      consumed: <Rabbit -> 9>
+[  87] Rat      consumed: <Rabbit -> 10>
+[  88] Rat      consumed: <Rabbit -> 11>
+[  89] Rat      consumed: <Rabbit -> 12>
+[  90] Rabbit   added: <Rabbit -> 19> (priority 2)
+[  91] Fox      added: <Fox -> 15> (priority 1)
+[  92] Wolf     added: <Wolf -> 14> (priority 0)
+[  93] Wolf     added: <Wolf -> 15> (priority 0)
+[  94] Fox      added: <Fox -> 16> (priority 1)
+[  95] Rat      consumed: <Wolf -> 14>
+[  96] Rat      consumed: <Wolf -> 15>
+[  97] Rat      consumed: <Fox -> 15>
+[  98] Wolf     added: <Wolf -> 16> (priority 0)
+[  99] Fox      added: <Fox -> 17> (priority 1)
+[ 100] Rat      consumed: <Wolf -> 16>
+[ 101] Rat      consumed: <Fox -> 16>
+[ 102] Fox      added: <Fox -> 18> (priority 1)
+[ 103] Wolf     added: <Wolf -> 17> (priority 0)
+[ 104] Rat      consumed: <Wolf -> 17>
+[ 105] Fox      added: <Fox -> 19> (priority 1)
+[ 106] Wolf     added: <Wolf -> 18> (priority 0)
+[ 107] Wolf     added: <Wolf -> 19> (priority 0)
+------------------------------------
+Remaining elements: 12
+[ 108] Mouse    consumed: <Wolf -> 18>
+[ 109] Mouse    consumed: <Wolf -> 19>
+[ 110] Mouse    consumed: <Fox -> 17>
+[ 111] Mouse    consumed: <Fox -> 18>
+[ 112] Mouse    consumed: <Fox -> 19>
+[ 113] Mouse    consumed: <Rabbit -> 13>
+[ 114] Mouse    consumed: <Rabbit -> 14>
+[ 115] Mouse    consumed: <Rabbit -> 15>
+[ 116] Mouse    consumed: <Rabbit -> 16>
+[ 117] Mouse    consumed: <Rabbit -> 17>
+[ 118] Mouse    consumed: <Rabbit -> 18>
+[ 119] Mouse    consumed: <Rabbit -> 19>
+Queue is empty!
+
+Items procecced 60
+Time spent 544663us
+
+Test finished   ------------------------------------
+
+-----------Enqueue / dequeue test -------------
+
+Enqueue test
+
+-------------------------------------
+Enqueued 1 elements: 14 us, queue size 1
+Enqueued 10 elements: 22 us, queue size 11
+Enqueued 100 elements: 175 us, queue size 111
+Enqueued 1000 elements: 1503 us, queue size 1111
+Enqueued 10000 elements: 15305 us, queue size 11111
+Enqueued 100000 elements: 145209 us, queue size 111111
+Enqueued 1000000 elements: 1458476 us, queue size 1111111
+
+-------------------------------------
+Dequeue test
+Dequeued 1111111 elements: 329339 us, queue size 0
+
+-----------end test-------------

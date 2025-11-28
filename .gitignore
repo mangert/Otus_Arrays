@@ -16,3 +16,8 @@ Makefile
 # IDE
 .vs/
 .idea/
+
+# черновики и вспомогательные файлы
+data.txt
+backup.cpp
+backup.main.txt

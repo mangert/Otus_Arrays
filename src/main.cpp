@@ -9,56 +9,23 @@
 #include "PriorityQueue.h"
 #include "QueueTester.h"
 
-/*
-void print(Array<int>& array) {
-
-	for (auto& item : array) {
-		std::cout << item << "  ";
-	};
-};
-
-void print(List<int>& list) {
-
-	for (auto& item : list) {
-		std::cout << item << "  ";
-	};
-};
-
-void print(MatrixArray<int>& list) {
-
-	for (auto& item : list) {
-		std::cout << item << "  ";
-	};
-};*/
 
 int main() {
 	setlocale(LC_ALL, "Russian");
-
-	PriorityQueue<std::string> m_queue; [](int x, int y) -> bool { return true; };
-	QueueTester<std::string> q_tester(&m_queue, 
-		[](std::string name, size_t i) ->std::string { return name + " * " + std::to_string(i); });
-
-	q_tester.test(5);
 	
-	/*
-	PriorityQueue<int> queue;
-	std::cout << queue.is_empty() << std::endl;
-	queue.enqueue(10, 1);
-	queue.enqueue(11, 0);
-	std::cout << queue.is_empty() << std::endl;
-	std::cout << queue.dequeue().value() << std::endl;
-	*/
-
-	/*
+	//переменные для тестирования
 	const size_t init_size = 1;
 	const size_t step_size = 10;
 	const size_t max_elements = 1000000;
 	
+	// 1. сначала тестируем разные массивы
+	
+	/*
 	std::cout << "1. Single array" << std::endl;
 	TestArrays<SingleArray, int> singleTest{ init_size, step_size, max_elements };
 	singleTest.complex_test();
 	std::cout << "\n-----------end test-------------\n\n";
-
+	
 	std::cout << "2. Vector array" << std::endl;
 	TestArrays<VectorArray, int, 10> vectorTest{ init_size, step_size, max_elements };
 	vectorTest.complex_test();
@@ -79,278 +46,35 @@ int main() {
 	matirixTest.complex_test();
 	std::cout << "\n-----------end test-------------\n\n";
 	*/
-	/*
-	std::cout << "Матричный массив" << std::endl;
-	MatrixArray<int> simpleArray{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };	
-	print(simpleArray);
+	// 2. Тестируем очередь
+	std::cout << "\n** Queue tests ************************\n\n";
+	// 2.1. Проверим корретность порядка извлечения
+
+	PriorityQueue<std::string> m_queue; //очередь из строк
 	
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
+	//параметризуем объект-тестер с этой очередью функцией, которая создает item'ы
+	QueueTester<std::string> str_queue_tester(&m_queue,
+		[](std::string name, size_t i) ->std::string {
+			return "<" +name + " -> " + std::to_string(i) + ">"; });
+	// для теста возьмем по 20 элементов на каждый приоритет (тестируется с тремя приоритетами, всего 3 * 20 = 60)
+	const size_t count = 20; 
+	//первый вариант
+	std::cout << "\n-----------Sequential queue test -------------\n\n";
+	str_queue_tester.test_sequential(count);
 	
-	simpleArray.push_back(21);
-	print(simpleArray);
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
+	//второй вариант
+	std::cout << "\n-----------Live queue test -------------\n\n";
+	str_queue_tester.test_live(count);
 	
-	simpleArray.del(5);
-	print(simpleArray);
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
+	// 2.2. Проверим скорость добавления / извлечения
+	PriorityQueue<int> int_queue; //очередь из чисел
 	
-	simpleArray.push(5, 5);
-	print(simpleArray);
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
-	
-	simpleArray.del(0);
-	print(simpleArray);
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
-	
-	simpleArray.push(0, 0);
-	print(simpleArray);
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
-
-	
-	simpleArray.del(21);
-	print(simpleArray);
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
-	
-	simpleArray.push_back(21);
-	print(simpleArray);
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
-
-	std::cout << simpleArray[9] << std::endl;
-
-	simpleArray[9] = 19;
-	print(simpleArray);
-	std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-	std::cout << std::endl << "****************" << std::endl;
-	
-	auto it = std::find(simpleArray.begin(), simpleArray.end(), 10);
-	if (it != simpleArray.end()) {
-		std::cout << "Found: " << *it << std::endl;
-	}
-	// Пустой массив
-	MatrixArray<int> empty(10);
-	std::cout << "Empty: " << empty.is_empty() << std::endl;
-	print(empty);
-	std::cout << "====================" << std::endl;	// Один элемент 	
-	std::cout << std::endl << "****************" << std::endl;
-	MatrixArray<int> single{42};
-	print(single);
-	std::cout << std::endl << "****************" << std::endl;
-	std::cout << std::endl << "size: " << single.size() << " capacity: " << single.capacity() << std::endl;
-	single.push_back(43);
-	print(single);
-	std::cout << std::endl << "****************" << std::endl;	
-	single.del(0);
-	print(single);
-	std::cout << std::endl << "****************" << std::endl;
-	// Конструктор копирования
-	MatrixArray<int> copy = MatrixArray<int>(simpleArray);
-	print(copy);
-	std::cout << std::endl << "****************" << std::endl;
-	// Перемещение  
-	MatrixArray<int> moved = std::move(simpleArray);
-	print(moved);
-
-	MatrixArray<int> other{ 100, 200 };
-	other = std::move(simpleArray);  // перемещающее присваивание
-	print(other);
-	std::cout << std::endl << "****************" << std::endl;
-	
-	/*
-	{
-		List<int> list = List<int>({ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
-
-		print(list);
-
-		std::cout << std::endl << "****************" << std::endl;
-		const List<int>& const_list = list;
-		int const_item = const_list[8];
-
-		int item = list[4];
-		std::cout << item << std::endl;
-		item = 9;
-		list[5] = 8;
-		print(list);
-		std::cout << std::endl << "****************" << std::endl;
-
-		int deleted = list.del(0);
-		std::cout << "deleted " << deleted << std::endl;
-		print(list);
-		std::cout << std::endl << "****************" << std::endl;
-
-		list.push_back(10);
-		print(list);
-		std::cout << std::endl << "****************" << std::endl;
-
-		list.push_front(10);
-		print(list);
-		std::cout << std::endl << "****************" << std::endl;
-
-		list.push(13, 0);
-		print(list);
-		std::cout << std::endl << "****************" << std::endl;
-	}
-	
-	{
-		std::cout << "1 Просто массив +1" << std::endl;
-		SingleArray<int> simpleArray{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push_back(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.del(5);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push(5, 5);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.del(0);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push(0, 0);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-
-		simpleArray.del(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push_back(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		std::cout << simpleArray[9] << std::endl;
-
-		simpleArray[9] = 19;
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-	}
-	
-	{
-		std::cout << "1 Просто массив +K" << std::endl;
-		VectorArray<int, 10> simpleArray{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push_back(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.del(5);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push(5, 5);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.del(0);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push(0, 0);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-
-		simpleArray.del(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push_back(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		std::cout << simpleArray[9] << std::endl;
-
-		simpleArray[9] = 19;
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-	}	
-	
-	{
-		std::cout << "1 Просто массив  * K" << std::endl;
-		FactorArray<int, 2> simpleArray{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push_back(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.del(5);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push(5, 5);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.del(0);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push(0, 0);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-
-		simpleArray.del(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		simpleArray.push_back(11);
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-
-		std::cout << simpleArray[9] << std::endl;
-
-		simpleArray[9] = 19;
-		print(simpleArray);
-		std::cout << std::endl << "size: " << simpleArray.size() << " capacity: " << simpleArray.capacity() << std::endl;
-		std::cout << std::endl << "****************" << std::endl;
-	}		
-	*/
-	
+	QueueTester<int> int_queue_tester(&int_queue,
+		[](std::string name, size_t i) ->int {
+			return i; }); //нам не важно содержание элемента, а так проще	
+	std::cout << "\n-----------Enqueue / dequeue test -------------\n\n";
+	int_queue_tester.test(init_size, max_elements, step_size);
+	std::cout << "\n-----------end test-------------\n\n";			
+		
 	return 0;
 }

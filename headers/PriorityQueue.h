@@ -2,6 +2,7 @@
 #include <optional>
 #include "List.h"
 
+//очередь с дискретными приоритетами
 template<typename T>
 class PriorityQueue {
 

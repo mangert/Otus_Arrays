@@ -63,12 +63,8 @@ public:
             try {                
                 
                 for (size_t i = 0; i < n; ++i) {
-                    container.push_back(T{});
-                    /*if (i % 10000 == 0) {  // печатать каждые 10k элементов
-                        std::cout << "\rProcessing: " << i << "/" << n << std::flush;
-                    }*/
-                }
-                //std::cout << "\rCompleted: " << n << " elements" << std::endl;
+                    container.push_back(T{});                   
+                }                
 
                 auto end = std::chrono::high_resolution_clock::now();
                 auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);                
