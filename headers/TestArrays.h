@@ -4,10 +4,8 @@
 #include <new>        // для std::bad_alloc
 
 template<template<typename, auto...> class ContainerT, typename T, auto... Args>
-//template<template<typename> class ContainerT, typename T>
 class TestArrays {
-private:
-    //ContainerT<T> container;
+private:    
     ContainerT<T, Args...> container;
     size_t initial_size;
     size_t step;
